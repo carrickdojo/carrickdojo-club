@@ -1,2 +1,3 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+<div class="flex min-h-screen w-full items-center justify-center bg-pink-500 text-lime-600">
+	<div class="text-6xl">Welcome to the CarrickDojo Club Page</div>
+</div>
