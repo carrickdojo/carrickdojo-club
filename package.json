@@ -48,8 +48,5 @@
 	"imports": {
 		"#lib": "./src/lib/index.js",
 		"#lib/*": "./src/lib/*"
-	},
-	"dependencies": {
-		"@splidejs/svelte-splide": "^0.2.9"
 	}
 }
