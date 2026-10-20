@@ -1,19 +1,23 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { Mail } from 'lucide-svelte';
 
 	let { form } = $props();
 </script>
 
-<div class="mx-auto max-w-md p-10">
-	<h1 class="mb-4 text-2xl font-bold">Send a Message</h1>
+<div class="m-2 mx-auto flex w-[50vw] flex-col gap-2 rounded bg-purple-800 p-8 text-lime-200">
+	<div class="flex items-center justify-center gap-2 rounded bg-lime-600 text-purple-800">
+		<h1 class=" text-3xl font-semibold tracking-tighter">Send a Message</h1>
+		<Mail class=" p-.5  leading-1.5" />
+	</div>
 
 	{#if form?.success}
 		<p class="text-lime-600">Message sent successfully</p>
 	{/if}
 
-	<form method="POST" class="flex flex-col gap-4" use:enhance>
+	<form method="POST" class="flex flex-col gap-2" use:enhance>
 		<div class="flex gap-4">
-			<label for="firstname" class="flex flex-col gap-4">
+			<label for="firstname" class="flex flex-col gap-1">
 				<span>First name</span>
 				<input
 					name="firstname"
@@ -23,7 +27,7 @@
 				/>
 			</label>
 
-			<label for="lastname" class="flex flex-col gap-4">
+			<label for="lastname" class="flex flex-col gap-1">
 				<span>Last name</span>
 				<input
 					name="lastname"
@@ -56,9 +60,11 @@
 		</label>
 
 		{#if form?.missing}
-			<p class="">Email and message fields are required</p>
+			<p class="">All fields are required</p>
 		{/if}
 
-		<button class="rounded bg-blue-600 p-2 text-zinc-200 hover:bg-blue-700">Send Message</button>
+		<button class="rounded bg-blue-600 p-2 text-zinc-200 hover:bg-blue-700">
+			<span class="flex items-center justify-center gap-2"> <Mail /> Send Message</span></button
+		>
 	</form>
 </div>

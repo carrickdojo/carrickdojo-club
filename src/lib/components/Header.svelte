@@ -1,4 +1,5 @@
 <script>
+	import { Mail, Presentation } from 'lucide-svelte';
 	import Button from './ui/button/button.svelte';
 </script>
 
@@ -13,7 +14,10 @@
 
 	<div class="">
 		<a href="/projects">
-			<Button>PROJECTS</Button>
+			<Button><Presentation />PROJECTS</Button>
+		</a>
+		<a href="/message">
+			<Button><Mail />MESSAGE</Button>
 		</a>
 	</div>
 </div>
