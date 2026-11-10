@@ -34,7 +34,7 @@
 				</div>
 			</div>
 
-			<div class="footer-licence">
+			<div class="footer-licence flex gap-2">
 				<img
 					src="images/icons/cc.svg"
 					style="
@@ -57,7 +57,7 @@
 					<img
 						src="images/icons/email.svg"
 						alt="Email CarrickDojo"
-						style="width: 1.5rem; height: 1.5rem"
+						style="width: 1.5rem; height: 1.5rem;  "
 					/>
 				</a>
 
@@ -71,7 +71,7 @@
 			</div>
 
 			<div class="footer-foundation">
-				<div class="foundation-icons">
+				<div class="foundation-icons flex gap-1">
 					<img
 						src="images/logos/coderdojo-roundel.svg"
 						alt="CoderDojo logo"
@@ -83,7 +83,7 @@
 						style="width: 4rem; height: 4rem; position: relative; top: 0.2rem"
 					/>
 				</div>
-				<div class="foundation-text">
+				<div class="foundation-text text-xs">
 					<span>
 						CarrickDojo is a branch of CoderDojo. CoderDojo is part of the Raspberry Pi Foundation.</span
 					>
