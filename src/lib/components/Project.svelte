@@ -16,7 +16,7 @@
 	<Card.Header>
 		<Card.Title>{project.title}</Card.Title>
 		<Card.Description>{project.introduction ?? 'No Intro'}</Card.Description>
-		<Card.Action>Card Action</Card.Action>
+		<!-- <Card.Action>Card Action</Card.Action> -->
 	</Card.Header>
 	<Card.Content>
 		{@html project.content}

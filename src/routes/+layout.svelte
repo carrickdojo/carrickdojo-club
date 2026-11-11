@@ -12,11 +12,19 @@
 	<link rel="icon" href={favicon} />
 </svelte:head>
 
-<div class="flex min-h-screen flex-col justify-between bg-purple-900 text-zinc-100">
+<a
+	href="#content"
+	class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:rounded-wobble focus:border-2 focus:border-ink focus:bg-paper focus:px-4 focus:py-2"
+>
+	Skip to content
+</a>
+
+<div class="flex min-h-screen flex-col">
 	<Header />
-	<div class="mx-auto flex min-h-[84vh] max-w-6xl">
+
+	<main id="content" class="mx-auto flex w-full max-w-6xl flex-1 justify-center">
 		{@render children()}
-	</div>
+	</main>
 
 	<Footer />
 </div>

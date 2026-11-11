@@ -35,13 +35,13 @@
 			class="rounded border p-2"
 		/>
 		{#if errors[name]}
-			<p id="{name}-error" class="text-amber-200">{errors[name]}</p>
+			<p id="{name}-error" class="">{errors[name]}</p>
 		{/if}
 	</div>
 {/snippet}
 
-<div class="mx-auto my-2 w-full max-w-xl rounded bg-purple-800 p-6 text-lime-200 sm:p-8">
-	<div class="mb-4 flex items-center justify-center gap-2 rounded bg-lime-200 p-1 text-purple-900">
+<div class="mx-auto my-2 w-full max-w-xl rounded p-6 sm:p-8">
+	<div class="mb-4 flex items-center justify-center gap-2 rounded p-1">
 		<h1 class="text-3xl font-semibold tracking-tighter">Send a Message</h1>
 		<Mail aria-hidden="true" />
 	</div>
@@ -49,14 +49,12 @@
 	<!-- Always in the page, so screen readers announce the text when it appears -->
 	<div role="status" aria-live="polite">
 		{#if form?.success}
-			<p class="mb-2 rounded bg-lime-200 p-2 font-medium text-purple-900">
-				Thanks, your message has been sent.
-			</p>
+			<p class="mb-2 rounded p-2 font-medium">Thanks, your message has been sent.</p>
 		{/if}
 	</div>
 
 	{#if form?.formError}
-		<p role="alert" class="mb-2 rounded bg-amber-200 p-2 font-medium text-purple-900">
+		<p role="alert" class="mb-2 rounded p-2 font-medium">
 			{form.formError}
 		</p>
 	{/if}
@@ -112,9 +110,9 @@
 			</label>
 		</div>
 
-		<p class="text-sm">
+		<p class="text-center text-xs">
 			We only use your details to reply to your message. Please don't include sensitive personal
-			information, such as health or financial details.
+			information.
 		</p>
 
 		<button
