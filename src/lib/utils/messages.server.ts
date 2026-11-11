@@ -1,10 +1,5 @@
-// Replace the existing createMessage in src/lib/utils/api.ts with this.
-// Add the import and the MessageError class near the top of the file.
-//
-// CMS_API stands for the base URL your other functions already use
-// (https://cms.carrickdojo.com/json). Use whatever variable api.ts has now.
-
-import { CARRICK_FRONTEND_SECRET, CMS_API_URL } from '$app/env/public';
+import { CARRICK_FRONTEND_SECRET } from '$app/env/private';
+const CMS_API = 'https://cms.carrickdojo.com/json';
 
 export class MessageError extends Error {
 	status: number;
@@ -33,7 +28,7 @@ export async function createMessage(
 		headers['X-Frontend-Secret'] = CARRICK_FRONTEND_SECRET;
 	}
 
-	const response = await fetch(`${CMS_API_URL}/api/messages`, {
+	const response = await fetch(`${CMS_API}/api/messages`, {
 		method: 'POST',
 		headers,
 		body: JSON.stringify({ firstname, lastname, email, phone, question, message })

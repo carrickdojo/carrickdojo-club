@@ -1,5 +1,5 @@
 import { fail } from '@sveltejs/kit';
-import { createMessage, MessageError } from '#lib/utils/api.ts';
+import { createMessage, MessageError } from '#lib/utils/messages.server.ts';
 import type { Actions } from './$types';
 
 // Keep these in step with the limits in the WordPress theme (endpoints/messages.php)
