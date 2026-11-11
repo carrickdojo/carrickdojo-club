@@ -1,70 +1,130 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { tick } from 'svelte';
 	import { Mail } from 'lucide-svelte';
+	import type { HTMLInputAttributes } from 'svelte/elements';
+	import type { ActionData } from './$types';
 
-	let { form } = $props();
+	let { form }: { form: ActionData } = $props();
+
+	let submitting = $state(false);
+
+	const values: Record<string, string | undefined> = $derived(form?.values ?? {});
+	const errors: Record<string, string | undefined> = $derived(form?.errors ?? {});
 </script>
 
-<div class="m-2 mx-auto flex w-[50vw] flex-col gap-2 rounded bg-purple-800 p-8 text-lime-200">
-	<div class="flex items-center justify-center gap-2 rounded bg-lime-600 text-purple-800">
-		<h1 class=" text-3xl font-semibold tracking-tighter">Send a Message</h1>
-		<Mail class=" p-.5  leading-1.5" />
+{#snippet field(
+	name: string,
+	label: string,
+	type: HTMLInputAttributes['type'],
+	autocomplete: HTMLInputAttributes['autocomplete'],
+	max: number
+)}
+	<div class="flex flex-1 flex-col gap-1">
+		<label for={name}>{label}</label>
+		<input
+			id={name}
+			{name}
+			{type}
+			{autocomplete}
+			maxlength={max}
+			required
+			value={values[name] ?? ''}
+			aria-invalid={errors[name] ? 'true' : undefined}
+			aria-describedby={errors[name] ? `${name}-error` : undefined}
+			class="rounded border p-2"
+		/>
+		{#if errors[name]}
+			<p id="{name}-error" class="text-amber-200">{errors[name]}</p>
+		{/if}
+	</div>
+{/snippet}
+
+<div class="mx-auto my-2 w-full max-w-xl rounded bg-purple-800 p-6 text-lime-200 sm:p-8">
+	<div class="mb-4 flex items-center justify-center gap-2 rounded bg-lime-200 p-1 text-purple-900">
+		<h1 class="text-3xl font-semibold tracking-tighter">Send a Message</h1>
+		<Mail aria-hidden="true" />
 	</div>
 
-	{#if form?.success}
-		<p class="text-lime-600">Message sent successfully</p>
+	<!-- Always in the page, so screen readers announce the text when it appears -->
+	<div role="status" aria-live="polite">
+		{#if form?.success}
+			<p class="mb-2 rounded bg-lime-200 p-2 font-medium text-purple-900">
+				Thanks, your message has been sent.
+			</p>
+		{/if}
+	</div>
+
+	{#if form?.formError}
+		<p role="alert" class="mb-2 rounded bg-amber-200 p-2 font-medium text-purple-900">
+			{form.formError}
+		</p>
 	{/if}
 
-	<form method="POST" class="flex flex-col gap-2" use:enhance>
-		<div class="flex gap-4">
-			<label for="firstname" class="flex flex-col gap-1">
-				<span>First name</span>
-				<input
-					name="firstname"
-					type="text"
-					class="rounded border p-2"
-					value={form?.firstname ?? ''}
-				/>
-			</label>
-
-			<label for="lastname" class="flex flex-col gap-1">
-				<span>Last name</span>
-				<input
-					name="lastname"
-					type="text"
-					class="rounded border p-2"
-					value={form?.lastname ?? ''}
-				/>
-			</label>
-		</div>
-		<div class="flex gap-4">
-			<label for="email" class="flex flex-col gap-4">
-				<span>Email</span>
-				<input name="email" type="email" class="rounded border p-2" value={form?.email ?? ''} />
-			</label>
-			<label for="phone" class="flex flex-col gap-4">
-				<span>Phone</span>
-				<input name="phone" type="tel" class="rounded border p-2" value={form?.phone ?? ''} />
-			</label>
+	<form
+		method="POST"
+		class="flex flex-col gap-3"
+		use:enhance={() => {
+			submitting = true;
+			return async ({ update }) => {
+				await update();
+				submitting = false;
+				// Move focus to the first field with a problem
+				await tick();
+				document.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();
+			};
+		}}
+	>
+		<div class="flex flex-col gap-3 sm:flex-row sm:gap-4">
+			{@render field('firstname', 'First name', 'text', 'given-name', 100)}
+			{@render field('lastname', 'Last name', 'text', 'family-name', 100)}
 		</div>
 
-		<label for="question" class="flex flex-col gap-4">
-			<span>Question</span>
-			<input name="question" type="text" class="rounded border p-2" value={form?.question ?? ''} />
-		</label>
+		<div class="flex flex-col gap-3 sm:flex-row sm:gap-4">
+			{@render field('email', 'Email', 'email', 'email', 254)}
+			{@render field('phone', 'Phone', 'tel', 'tel', 50)}
+		</div>
 
-		<label for="message" class="flex flex-col gap-4">
-			<span>Message</span>
-			<textarea name="message" class="rounded border p-2" value={(form?.message as string) ?? ''}
-			></textarea>
-		</label>
+		{@render field('question', 'Question', 'text', 'off', 200)}
 
-		{#if form?.missing}
-			<p class="">All fields are required</p>
-		{/if}
+		<div class="flex flex-col gap-1">
+			<label for="message">Message</label>
+			<textarea
+				id="message"
+				name="message"
+				rows="6"
+				maxlength="5000"
+				required
+				value={values.message ?? ''}
+				aria-invalid={errors.message ? 'true' : undefined}
+				aria-describedby={errors.message ? 'message-error' : undefined}
+				class="rounded border p-2"></textarea>
+			{#if errors.message}
+				<p id="message-error" class="text-amber-200">{errors.message}</p>
+			{/if}
+		</div>
 
-		<button class="rounded bg-blue-600 p-2 text-zinc-200 hover:bg-blue-700">
-			<span class="flex items-center justify-center gap-2"> <Mail /> Send Message</span></button
+		<!-- Honeypot: hidden from people, often filled in by bots. Do not remove. -->
+		<div class="absolute -left-[9999px]" aria-hidden="true">
+			<label>
+				Website
+				<input name="website" type="text" tabindex="-1" autocomplete="off" />
+			</label>
+		</div>
+
+		<p class="text-sm">
+			We only use your details to reply to your message. Please don't include sensitive personal
+			information, such as health or financial details.
+		</p>
+
+		<button
+			disabled={submitting}
+			class="rounded bg-blue-600 p-2 text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
 		>
+			<span class="flex items-center justify-center gap-2">
+				<Mail aria-hidden="true" />
+				{submitting ? 'Sending…' : 'Send Message'}
+			</span>
+		</button>
 	</form>
 </div>
