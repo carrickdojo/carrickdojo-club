@@ -5,9 +5,9 @@
 				<div>
 					<h3>About CarrickDojo</h3>
 					<a href="https://coderdojo.com/en/about">What is CoderDojo?</a>
-					<a href="/about.html">Our Dojo and Champion</a>
-					<a href="/about.html#join">Joining and Tickets</a>
-					<a href="/contact.html">Getting in Touch</a>
+					<a href="https://www.carrickdojo.com/about.html">Our Dojo and Champion</a>
+					<a href="https://www.carrickdojo.com/about.html#join">Joining and Tickets</a>
+					<a href="https://www.carrickdojo.com/contact.html">Getting in Touch</a>
 				</div>
 				<div>
 					<h3>Projects</h3>
@@ -18,19 +18,23 @@
 				</div>
 				<div>
 					<h3>Supporting Us</h3>
-					<a href="/mentors.html">Becoming a Mentor</a>
-					<a href="/support.html#volunteer">Volunteering and Helping Out</a>
-					<a href="/support.html#sponsor">Sponsors and Donations</a>
-					<a href="/support.html#hardware">Gifting Laptops and Hardware</a>
+					<a href="https://www.carrickdojo.com/mentors.html">Becoming a Mentor</a>
+					<a href="https://www.carrickdojo.com/support.html#volunteer"
+						>Volunteering and Helping Out</a
+					>
+					<a href="https://www.carrickdojo.com/support.html#sponsor">Sponsors and Donations</a>
+					<a href="https://www.carrickdojo.com/support.html#hardware"
+						>Gifting Laptops and Hardware</a
+					>
 				</div>
 
 				<div>
 					<h3>Policies and Guidelines</h3>
-					<a href="/site.html">Site Information</a>
-					<a href="/safeguarding.html">Safeguarding</a>
+					<a href="https://www.carrickdojo.com/site.html">Site Information</a>
+					<a href="https://www.carrickdojo.com/safeguarding.html">Safeguarding</a>
 
-					<a href="/charter.html">CoderDojo Charter</a>
-					<a href="/privacy.html">Privacy Policy</a>
+					<a href="https://www.carrickdojo.com/charter.html">CoderDojo Charter</a>
+					<a href="https://www.carrickdojo.com/privacy.html">Privacy Policy</a>
 				</div>
 			</div>
 
