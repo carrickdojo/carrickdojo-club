@@ -2,7 +2,7 @@ import type { PageLoad } from './$types';
 
 export const load = (async ({ fetch }) => {
 	try {
-		const response = await fetch('https://carrickdojo.wasmer.app/json/api/projects');
+		const response = await fetch('https://cms.carrickdojo.com/json/api/projects');
 
 		if (!response.ok) {
 			console.error(`Projects request failed: ${response.status}`);
