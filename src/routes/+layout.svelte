@@ -1,8 +1,8 @@
 <script lang="ts">
 	import './layout.css';
-	import favicon from '#lib/assets/favicon.svg';
-	import type { LayoutProps } from './$types';
 
+	import type { LayoutProps } from './$types';
+	import favicon from '#lib/assets/coderdojo-roundel.svg';
 	let { children }: LayoutProps = $props();
 </script>
 
