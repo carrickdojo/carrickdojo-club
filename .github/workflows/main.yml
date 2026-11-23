@@ -1,20 +1,20 @@
 name: Push commit
-on: 
+on:
   push:
     branches:
       - main
 permissions:
   contents: write
-  
+
 jobs:
   report:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v7
-      with:
-        ref: ${{ github.head_ref }}
-        
-    - uses: stefanzweifel/git-auto-commit-action@v7
-      with:
-        commit_message: Recommit
-        branch: prod
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.head_ref }}
+
+      - uses: stefanzweifel/git-auto-commit-action@v7
+        with:
+          commit_message: Recommit
+          branch: prod

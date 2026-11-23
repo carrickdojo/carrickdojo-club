@@ -20,8 +20,30 @@ import tailwindcss from '@tailwindcss/vite';
 import adapter from '@sveltejs/adapter-vercel';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
+import { readFileSync } from 'node:fs';
+
+// Installed version of a package, read from node_modules at build time
+const installed = (name: string): string =>
+	(JSON.parse(readFileSync(`node_modules/${name}/package.json`, 'utf8')) as { version: string })
+		.version;
+
+const buildInfo = {
+	built: new Date().toISOString(),
+	commit: process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) ?? 'local',
+	branch: process.env.VERCEL_GIT_COMMIT_REF ?? 'local',
+	node: process.version,
+	packages: Object.fromEntries(
+		['@sveltejs/kit', 'svelte', 'vite', 'tailwindcss', 'mdsvex', 'typescript'].map((name) => [
+			name,
+			installed(name)
+		])
+	)
+};
 
 export default defineConfig({
+	define: {
+		__BUILD_INFO__: JSON.stringify(buildInfo)
+	},
 	plugins: [
 		mdsvex({
 			extensions: ['.md'],

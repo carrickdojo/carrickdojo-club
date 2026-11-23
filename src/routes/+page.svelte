@@ -21,8 +21,10 @@
 			In the meantime, visit
 			<a
 				href="https://carrickdojo.com"
-				class="font-semibold text-accent underline underline-offset-4">carrickdojo.com</a
+				class="font-semibold text-accent underline underline-offset-4"
 			>
+				carrickdojo.com
+			</a>
 		</p>
 	</div>
 </main>

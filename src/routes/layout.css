@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@plugin '@tailwindcss/typography';
 
 /* Day theme (default). Tailwind turns these into bg-bg, text-fg, text-accent etc. */
 @theme {
@@ -27,4 +28,17 @@
 
 body {
 	@apply bg-bg text-fg antialiased;
+}
+
+/* Typography plugin uses its own colours. Point them at our theme. */
+.prose {
+	--tw-prose-body: var(--color-fg);
+	--tw-prose-headings: var(--color-fg);
+	--tw-prose-bold: var(--color-fg);
+	--tw-prose-links: var(--color-accent);
+	--tw-prose-code: var(--color-fg);
+	--tw-prose-quotes: var(--color-muted);
+	--tw-prose-bullets: var(--color-muted);
+	--tw-prose-counters: var(--color-muted);
+	--tw-prose-hr: color-mix(in oklab, var(--color-muted) 30%, transparent);
 }
