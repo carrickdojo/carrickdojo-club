@@ -21,6 +21,7 @@ polls:
     type: choice
     text: Do think AI will change thinks for the better?
     options: [ No, maybe - but it is very early to say, probably -  it has reached of level that it is useful for certain things, yes ]
+# closes: '2026-11-24 19:45'
 ---
 
 We're building a new club website, adding new tools and abilities to our club.  We now need to ask the questions on how we manage our site, registrations, personal data and running the club; and where (if anywhere) AI could be used safely for the benefit of the club. 
