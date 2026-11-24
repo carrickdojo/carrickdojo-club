@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
+	import PollResults from '#lib/components/PollResults.svelte';
 	import type { PageProps } from './$types';
 
 	let { data, form }: PageProps = $props();
@@ -19,7 +20,7 @@
 	// Keeps choices ticked if the form comes back with an error
 	const checked = (id: string, value: string) => form?.values?.[id]?.includes(value) ?? false;
 
-	// Every option in the order written in the .md file, including ones nobody picked
+	// Every option in the order written in the .md file (used by the vote form)
 	const optionsFor = (poll: PollDefinition): [string, string][] =>
 		poll.type === 'yes-no'
 			? [
@@ -27,9 +28,6 @@
 					['no', 'No']
 				]
 			: poll.options.map((option) => [option, option]);
-
-	const percent = (count: number, total: number) =>
-		total === 0 ? 0 : Math.round((count / total) * 100);
 </script>
 
 <svelte:head>
@@ -52,36 +50,7 @@
 			<p>Results aren't available right now. Please try again later.</p>
 		{:else if data.results}
 			{#each data.questionnaire.polls as poll (poll.id)}
-				{@const r = data.results[poll.id]}
-				<section>
-					<h2>{poll.text}</h2>
-					{#if r.result === null}
-						<p>
-							{r.total}
-							{r.total === 1 ? 'vote' : 'votes'}. Fewer than 5 people voted, so only the total is
-							shown.
-						</p>
-					{:else}
-						<p class="text-muted">
-							{r.total} votes{poll.type === 'choice' && poll.multiple
-								? ' (people could pick more than one)'
-								: ''}
-						</p>
-						<ul class="not-prose space-y-3">
-							{#each optionsFor(poll) as [value, label] (value)}
-								{@const count = r.result[value] ?? 0}
-								<li>
-									<div class="flex justify-between">
-										<span>{label}</span>
-										<span>{count} ({percent(count, r.total)}%)</span>
-									</div>
-									<progress class="h-2 w-full" value={count} max={r.total} aria-hidden="true"
-									></progress>
-								</li>
-							{/each}
-						</ul>
-					{/if}
-				</section>
+				<PollResults {poll} result={data.results[poll.id]} />
 			{/each}
 		{/if}
 	{:else if form?.voted || data.voted}

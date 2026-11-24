@@ -33,6 +33,15 @@
 					Docs
 				</a>
 			</li>
+			<li>
+				<a
+					href={resolve('/polls')}
+					aria-current={isActive('/polls') ? 'page' : undefined}
+					class={linkClass}
+				>
+					Polls
+				</a>
+			</li>
 		</ul>
 	</nav>
 </header>

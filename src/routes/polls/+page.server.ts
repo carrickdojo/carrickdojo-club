@@ -8,7 +8,9 @@ export const load: PageServerLoad = async ({ locals, cookies, fetch }) => {
 	if (!locals.token) redirect(303, '/signin');
 
 	try {
-		const { code, session, voted } = await me(fetch, locals.token);
+		const { code, kind, session, voted } = await me(fetch, locals.token);
+		console.log('me kind:', kind);
+		if (kind === 'screen' || kind === 'mentor') redirect(303, '/screen/polls');
 
 		const polls = questionnaires
 			.filter((q) => q.session === session)

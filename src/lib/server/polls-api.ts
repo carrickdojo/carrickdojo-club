@@ -39,11 +39,14 @@ async function call<T>(fetch: typeof globalThis.fetch, path: string, body: objec
 	return data as T;
 }
 
+export type CodeKind = 'member' | 'mentor' | 'screen';
+
 export interface Me {
 	session: string;
 	code: string;
+	kind: CodeKind;
 	voted: string[];
-	nickname: string | null;
+	persona: string | null;
 }
 
 export const signin = (
@@ -52,7 +55,7 @@ export const signin = (
 	code: string,
 	expires: Date
 ) =>
-	call<{ token: string; expires_at: string }>(fetch, '/signin', {
+	call<{ token: string; kind: CodeKind; expires_at: string }>(fetch, '/signin', {
 		session,
 		code,
 		expires: expires.toISOString()
@@ -69,6 +72,17 @@ export const vote = (
 	token: string,
 	answers: Record<string, string | string[]>
 ) => call<{ voted: string[] }>(fetch, '/vote', { token, answers });
+
+/** Screen and mentor codes only. Totals, never how anyone voted. */
+export interface Live {
+	session: string;
+	members: number;
+	signed_in: number;
+	polls: Record<string, { votes: number; finalised: boolean }>;
+}
+
+export const live = (fetch: typeof globalThis.fetch, token: string, polls: string[]) =>
+	call<Live>(fetch, '/live', { token, polls });
 
 export interface PollResult {
 	poll: string;

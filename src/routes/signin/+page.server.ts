@@ -1,6 +1,6 @@
 import { fail, redirect } from '@sveltejs/kit';
 import { todaysSession } from '#lib/server/sessions.ts';
-import { PollsError, signin } from '#lib/server/polls-api.ts';
+import { PollsError, signin, type CodeKind } from '#lib/server/polls-api.ts';
 import { SIGNIN_COOKIE, cookieOptions } from '#lib/server/signin.ts';
 import type { Actions, PageServerLoad } from './$types';
 
@@ -20,8 +20,9 @@ export const actions = {
 		if (!session) return fail(400, { error: "There's no session today." });
 
 		let token: string;
+		let kind: CodeKind;
 		try {
-			({ token } = await signin(fetch, session.id, code, session.end));
+			({ token, kind } = await signin(fetch, session.id, code, session.end));
 		} catch (err) {
 			if (err instanceof PollsError && (err.status === 400 || err.status === 429)) {
 				return fail(err.status, { error: err.message });
@@ -34,6 +35,6 @@ export const actions = {
 		}
 
 		cookies.set(SIGNIN_COOKIE, token, cookieOptions());
-		redirect(303, '/polls');
+		redirect(303, kind === 'member' ? '/polls' : '/screen/polls');
 	}
 } satisfies Actions;
